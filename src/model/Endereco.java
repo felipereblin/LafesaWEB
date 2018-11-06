@@ -7,6 +7,7 @@ public class Endereco {
 	private String cidade;  
 	private String uf; 
 	private String cep;
+	
 	public int getId() {
 		return id;
 	}
@@ -44,6 +45,9 @@ public class Endereco {
 		this.cidade = cidade;
 		this.uf = uf;
 		this.cep = cep;
-	} 
+	}
+	public Endereco() {
+
+	}
 
 }
