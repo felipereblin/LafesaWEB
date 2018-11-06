@@ -4,8 +4,9 @@ public class Cliente {
 
 	private int id;
 	private String nome;
-	private String cpf; 
+	private long cpf; 
 	private Endereco endereco;
+	
 	public int getId() {
 		return id;
 	}
@@ -18,10 +19,10 @@ public class Cliente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getCpf() {
+	public long getCpf() {
 		return cpf;
 	}
-	public void setCpf(String cpf) {
+	public void setCpf(long cpf) {
 		this.cpf = cpf;
 	}
 	public Endereco getEndereco() {
