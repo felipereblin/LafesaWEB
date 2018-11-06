@@ -1,6 +1,6 @@
 package model;
 
-public class Cliente {
+public class Produtoe {
 
 	private int id;
 	private String nome;
