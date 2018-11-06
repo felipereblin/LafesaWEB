@@ -176,6 +176,7 @@ public class EnderecoDao implements Dao<Endereco> {
 		}
 	}
 	
+	
 	private static void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 		try {
 			if (myRs != null) {
