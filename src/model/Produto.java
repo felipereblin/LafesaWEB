@@ -24,6 +24,7 @@ public class Produto {
 	public void setMarca(Marca marca) {
 		this.marca = marca;
 	}
+	
 	public double getPrecoUnitario() {
 		return precoUnitario;
 	}
