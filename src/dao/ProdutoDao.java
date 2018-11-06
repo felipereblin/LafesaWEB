@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Produtoe;
 import model.Endereco;
 import model.Marca;
 import model.Produto;

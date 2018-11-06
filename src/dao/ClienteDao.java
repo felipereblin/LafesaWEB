@@ -8,10 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Produtoe;
+import model.Cliente;
 import model.Endereco;
 
-	public class ClienteDao implements Dao<Produtoe> {
+	public class ClienteDao implements Dao<Cliente> {
 		
 		private static final String GET_BY_ID = "SELECT * FROM cliente WHERE id = ?";
 		private static final String GET_ALL = "SELECT * FROM cliente";
@@ -48,9 +48,9 @@ import model.Endereco;
 		}
 		
 		
-		private Produtoe getClienteFromRS(ResultSet rs) throws SQLException
+		private Cliente getClienteFromRS(ResultSet rs) throws SQLException
 	    {
-			Produtoe cliente = new Produtoe();
+			Cliente cliente = new Cliente();
 				
 			cliente.setId( rs.getInt("id") );
 			cliente.setNome( rs.getString("nome") );
@@ -61,10 +61,10 @@ import model.Endereco;
 	    }
 		
 		@Override
-		public Produtoe getByKey(int id) {
+		public Cliente getByKey(int id) {
 			Connection conn = DbConnection.getConnection();
 			
-			Produtoe cliente = null;
+			Cliente cliente = null;
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
 			
@@ -86,10 +86,10 @@ import model.Endereco;
 		}
 
 		@Override
-		public List<Produtoe> getAll() {
+		public List<Cliente> getAll() {
 			Connection conn = DbConnection.getConnection();
 			
-			List<Produtoe> clientes = new ArrayList<>();
+			List<Cliente> clientes = new ArrayList<>();
 			Statement stmt = null;
 			ResultSet rs = null;
 			
@@ -112,7 +112,7 @@ import model.Endereco;
 		}
 
 		@Override
-		public void insert(Produtoe cliente) {
+		public void insert(Cliente cliente) {
 			Connection conn = DbConnection.getConnection();
 			PreparedStatement stmt = null;
 			ResultSet rs = null;
@@ -156,7 +156,7 @@ import model.Endereco;
 		}
 
 		@Override
-		public void update(Produtoe cliente) {
+		public void update(Cliente cliente) {
 			Connection conn = DbConnection.getConnection();
 			PreparedStatement stmt = null;
 			
