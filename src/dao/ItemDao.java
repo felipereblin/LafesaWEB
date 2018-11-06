@@ -43,7 +43,7 @@ public class ItemDao implements Dao<Item>{
 
 	    Statement stmt = conn.createStatement();
 	    stmt.execute(sqlCreate);
-	} 
+	}
 	
 	
 	private Item getItemFromRS(ResultSet rs) throws SQLException
