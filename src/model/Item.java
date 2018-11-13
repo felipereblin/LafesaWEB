@@ -37,5 +37,10 @@ public class Item {
 		this.produto = produto;
 		this.quantidade = quantidade;
 	}
+	public Item() {
+		super();
+	}
+	
+	
 	  
 }

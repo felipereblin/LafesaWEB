@@ -5,18 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Cliente;
+import model.Pedido;
+import model.Endereco;
 import model.Item;
 import model.Pedido;
 
 
 public class ItemDao implements Dao<Item>{
 	
-	private static final String GET_BY_ID = "SELECT * FROM item NATURAL JOIN cliente WHERE id = ?";
-	private static final String GET_ALL = "SELECT * FROM item NATURAL JOIN cliente";
+	private static final String GET_BY_ID = "SELECT * FROM item NATURAL JOIN pedido WHERE id = ?";
+	private static final String GET_ALL = "SELECT * FROM item NATURAL JOIN pedido";
 	private static final String INSERT = "INSERT INTO item (pedido_id, produto_id, quantidade) "	+ "VALUES (?, ?, ?)";
 	private static final String UPDATE = "UPDATE item SET pedido_id = ?, produto_id = ?, quantidade = ? WHERE id = ?";
 	private static final String DELETE = "DELETE FROM item WHERE id = ?";
@@ -43,7 +45,7 @@ public class ItemDao implements Dao<Item>{
 
 	    Statement stmt = conn.createStatement();
 	    stmt.execute(sqlCreate);
-	}
+	} 
 	
 	
 	private Item getItemFromRS(ResultSet rs) throws SQLException
@@ -51,8 +53,10 @@ public class ItemDao implements Dao<Item>{
 		Item item = new Item();
 			
 		item.setId( rs.getInt("id") );
-		item.setCliente( new Pedido(rs.getArray(columnIndex)) );
-		item.setId( rs.getInt("quantidade") );
+		item.setPedido (new Pedido(rs.getInt("pedido_id"), rs.getDouble("valorTotal")));
+		
+		
+		item.setQuantidade(rs.getInt("quantidade") );
 	
 		return item;
     }

@@ -11,6 +11,11 @@ public class Marca {
 		this.nome = nome;
 	}
 	
+	
+	public Marca() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}
