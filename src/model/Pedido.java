@@ -5,13 +5,11 @@ import java.util.List;
 public class Pedido {
 
 	private int id;
-	private List<Item> itens;
 	private double valorTotal;
+	private List<Item> itens;
 	
-	public Pedido(int id, List<Item> itens, double valorTotal) {
-		super();
+	public Pedido(int id, double valorTotal) {
 		this.id = id;
-		this.itens = itens;
 		this.valorTotal = valorTotal;
 	}
 
@@ -26,14 +24,6 @@ public class Pedido {
 		this.id = id;
 	}
 
-	public List<Item> getItens() {
-		return itens;
-	}
-
-	public void setItens(List<Item> itens) {
-		this.itens = itens;
-	}
-
 	public double getValorTotal() {
 		return valorTotal;
 	}
@@ -42,4 +32,11 @@ public class Pedido {
 		this.valorTotal = valorTotal;
 	}
 
+	public List<Item> getItens() {
+		return itens;
+	}
+
+	public void setItens(List<Item> itens) {
+		this.itens = itens;
+	}
 }
