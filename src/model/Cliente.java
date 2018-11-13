@@ -1,12 +1,11 @@
 package model;
 
 public class Cliente {
-
 	private int id;
 	private String nome;
 	private long cpf; 
-	private Endereco endereco;
-	
+	private Endereco endereco; 
+
 	public int getId() {
 		return id;
 	}

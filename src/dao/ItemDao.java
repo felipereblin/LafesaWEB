@@ -1,4 +1,5 @@
 package dao;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,66 +8,62 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Endereco;
+import model.Cliente;
+import model.Item;
+import model.Pedido;
 
-public class EnderecoDao implements Dao<Endereco> {
 
-	private static final String GET_BY_ID = "SELECT * FROM endereco WHERE id = ?";
-	private static final String GET_ALL = "SELECT * FROM endereco";
-	private static final String INSERT = "INSERT INTO endereco (rua, cidade, uf, CEP) "
-			+ "VALUES (?, ?, ?, ?)";
-	private static final String UPDATE = "UPDATE endereco SET rua = ?, cidade = ?, uf = ?, "
-			+ "CEP = ?  WHERE id = ?";
-	private static final String DELETE = "DELETE FROM endereco WHERE id = ?";
+public class ItemDao implements Dao<Item>{
 	
-	public EnderecoDao() {
+	private static final String GET_BY_ID = "SELECT * FROM item NATURAL JOIN cliente WHERE id = ?";
+	private static final String GET_ALL = "SELECT * FROM item NATURAL JOIN cliente";
+	private static final String INSERT = "INSERT INTO item (pedido_id, produto_id, quantidade) "	+ "VALUES (?, ?, ?)";
+	private static final String UPDATE = "UPDATE item SET pedido_id = ?, produto_id = ?, quantidade = ? WHERE id = ?";
+	private static final String DELETE = "DELETE FROM item WHERE id = ?";
+	
+	public ItemDao() {
 		try {
 			createTable();
 		} catch (SQLException e) {
-			throw new RuntimeException("Erro ao criar tabela no banco.", e);
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 	
 	private void createTable() throws SQLException {
-	    String sqlCreate = "CREATE TABLE IF NOT EXISTS cliente"
-	            + "  (id           	INTEGER,"
-	            + "   rua           VARCHAR(50),"
-	            + "   cidade	    VARCHAR(50),"
-	            + "   uf		 	VARCHAR(50),"
-	            + "   cep           VARCHAR(50),"
+	    final String sqlCreate = "CREATE TABLE IF NOT EXISTS item"
+	            + "  (id           INTEGER,"
+	            + "   pedido_id      INTEGER,"
+	            + "   produto_id   INTEGER,"
+	            + "   quantidade	   INTEGER,"
+	            + "   FOREIGN KEY (pedido_id) REFERENCES pedido(id),"
+	            + "   FOREIGN KEY (produto_id) REFERENCES produto(id),"
 	            + "   PRIMARY KEY (id))";
 	    
 	    Connection conn = DbConnection.getConnection();
 
-
 	    Statement stmt = conn.createStatement();
 	    stmt.execute(sqlCreate);
-	    
-	    close(conn, stmt, null);
 	}
 	
 	
-	private Endereco getEnderecoFromRS(ResultSet rs) throws SQLException
+	private Item getItemFromRS(ResultSet rs) throws SQLException
     {
-		Endereco endereco = new Endereco();
+		Item item = new Item();
 			
-		endereco.setId( rs.getInt("id") );
-		endereco.setRua( rs.getString("rua") );
-		endereco.setCidade( rs.getString("cidade") );
-		endereco.setUf( rs.getString("uf") );
-		endereco.setCep( rs.getString("cep") );
+		item.setId( rs.getInt("id") );
+		item.setCliente( new Pedido(rs.getArray(columnIndex)) );
+		item.setId( rs.getInt("quantidade") );
 	
-		return endereco;
+		return item;
     }
 	
 	@Override
-	public Endereco getByKey(int id) {
+	public Item getByKey(int id) {
 		Connection conn = DbConnection.getConnection();
-		
-		Endereco endereco = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
+		
+		Item item = null;
 		
 		try {
 			stmt = conn.prepareStatement(GET_BY_ID);
@@ -74,24 +71,24 @@ public class EnderecoDao implements Dao<Endereco> {
 			rs = stmt.executeQuery();
 			
 			if (rs.next()) {
-				endereco = getEnderecoFromRS(rs);
+				item = getItemFromRS(rs);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Erro ao obter o endereco pela chave.", e);
+			e.printStackTrace();
 		} finally {
 			close(conn, stmt, rs);
 		}
 		
-		return endereco;
+		return item;
 	}
 
 	@Override
-	public List<Endereco> getAll() {
+	public List<Item> getAll() {
 		Connection conn = DbConnection.getConnection();
-		
-		List<Endereco> enderecos = new ArrayList<>();
 		Statement stmt = null;
 		ResultSet rs = null;
+		
+		List<Item> item = new ArrayList<>();
 		
 		try {
 			stmt = conn.createStatement();
@@ -99,40 +96,39 @@ public class EnderecoDao implements Dao<Endereco> {
 			rs = stmt.executeQuery(GET_ALL);
 			
 			while (rs.next()) {
-				enderecos.add(getEnderecoFromRS(rs));
+				item.add(getItemFromRS(rs));
 			}			
 			
 		} catch (SQLException e) {
-			throw new RuntimeException("Erro ao obter todos os clientes.", e);
+			e.printStackTrace();
 		} finally {
 			close(conn, stmt, rs);
 		}
 		
-		return enderecos;
+		return item;
 	}
 
 	@Override
-	public void insert(Endereco endereco) {
+	public void insert(Item item) {
 		Connection conn = DbConnection.getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
 		try {
 			stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, endereco.getId());
-			stmt.setString(2, endereco.getRua());
-			stmt.setString(3, endereco.getUf());
-			stmt.setString(4, endereco.getCep());
-			
+			stmt.setInt(1, item.getPedido().getId());
+			stmt.setInt(2, item.getProduto().getId());
+			stmt.setInt(3, item.getQuantidade());
+
 			stmt.executeUpdate();
 			rs = stmt.getGeneratedKeys();
 			
 			if (rs.next()) {
-				endereco.setId(rs.getInt(1));
+				item.setId(rs.getInt(1));
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Erro ao inserir endereço.", e);
-		}finally {
+			e.printStackTrace();
+		} finally {
 			close(conn, stmt, rs);
 		}
 
@@ -141,6 +137,7 @@ public class EnderecoDao implements Dao<Endereco> {
 	@Override
 	public void delete(int id) {
 		Connection conn = DbConnection.getConnection();
+		
 		PreparedStatement stmt = null;
 		
 		try {
@@ -150,32 +147,33 @@ public class EnderecoDao implements Dao<Endereco> {
 			
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException("Erro ao remover endereço.", e);
+			e.printStackTrace();
 		} finally {
 			close(conn, stmt, null);
 		}
 	}
 
 	@Override
-	public void update(Endereco endereco) {
+	public void update(Item item) {
 		Connection conn = DbConnection.getConnection();
+		
 		PreparedStatement stmt = null;
 		
 		try {
 			stmt = conn.prepareStatement(UPDATE);
-			stmt.setString(1, endereco.getRua());
-			stmt.setString(2, endereco.getUf());
-			stmt.setString(3, endereco.getCep());
-			stmt.setInt(4, endereco.getId());
+			stmt.setInt(1, item.getPedido().getId());
+			stmt.setInt(2, item.getProduto().getId());
+			stmt.setInt(3, item.getQuantidade());
+			stmt.setInt(4, item.getId());
+			
 			stmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new RuntimeException("Erro ao atualizar endereços.", e);
+			e.printStackTrace();
 		} finally {
-			close(conn, stmt, null);
+			close (conn, stmt, null);
 		}
 	}
-	
 	
 	private static void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 		try {
@@ -195,5 +193,5 @@ public class EnderecoDao implements Dao<Endereco> {
 		}
 		
 	}
-
+	
 }
