@@ -8,7 +8,7 @@ public class ActionFactory {
 			throws ServletException {
 		
 		String parameter = request.getParameter("action") != null ? request.getParameter("action") : defaultAction;
-		String className = "br.eti.gregori.action." + parameter;
+		String className = "action." + parameter;
 		
 		try {
 			

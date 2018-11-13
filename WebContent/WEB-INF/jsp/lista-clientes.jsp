@@ -10,7 +10,7 @@
 </head>
 <body>
   <h2>${mensagem}</h2>
-  <a href="controller?action=ActionFormEditContato">Novo Cliente</a>
+  <a href="controller?action=ActionFormEditCliente">Novo Cliente</a>
   <table>
     <thead>
       <tr>
