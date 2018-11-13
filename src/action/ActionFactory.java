@@ -17,7 +17,7 @@ public class ActionFactory {
 			
 			return action;
 		} catch (Exception e) {
-			throw new ServletException("A ActionFactory causou uma exceÃ§Ã£o", e);
+			throw new ServletException("A ActionFactory causou uma exceção", e);
 		}
 	}
 }
