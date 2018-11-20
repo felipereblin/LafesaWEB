@@ -16,7 +16,7 @@ public class MarcaDao implements Dao<Marca> {
 	private static final String GET_BY_ID = "SELECT * FROM marca WHERE id = ?";
 	private static final String GET_ALL = "SELECT * FROM marca";
 	private static final String INSERT = "INSERT INTO marca (nome) "+ "VALUES (?)";
-	private static final String UPDATE = "UPDATE marca SET nome = ?";
+	private static final String UPDATE = "UPDATE marca SET nome = ? where id = ?";
 	private static final String DELETE = "DELETE FROM marca WHERE id = ?";
 	
 	public MarcaDao() {
