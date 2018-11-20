@@ -15,8 +15,9 @@ public class ClienteService {
 	}
 	
 	public void updateClienteEndereco(Cliente cliente) {
-		clienteDao.update(cliente);
 		enderecoDao.update(cliente.getEndereco());
+		clienteDao.update(cliente);
+		
 		
 	}
 

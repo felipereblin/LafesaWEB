@@ -33,8 +33,8 @@
 	    <td>${cliente.endereco.uf}</td>
 	    <td>${cliente.endereco.cep}</td>
 	    
-	    <td><a href="controller?action=ActionFormEditContato&id=${cliente.id}">Editar</a></td>
-	    <td><a href="controller?action=ActionRemoveContato&id=${cliente.id}">Remover</a></td>
+	    <td><a href="controller?action=ActionFormEditCliente&id=${cliente.id}">Editar</a></td>
+	    <td><a href="controller?action=ActionRemoveCliente&id=${cliente.id}">Remover</a></td>
   	  </tr>
   	</c:forEach>
   </table>

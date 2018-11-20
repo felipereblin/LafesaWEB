@@ -26,7 +26,9 @@ public class ActionCreateEditCliente implements Action {
 		
 		if (request.getParameter("id") != "" && request.getParameter("id") != null) {
 			String id = request.getParameter("id");
+			String endereco_id = request.getParameter("endereco_id");
 			cliente.setId(Integer.parseInt(id));
+			cliente.getEndereco().setId(Integer.parseInt(endereco_id));
 			clienteService.updateClienteEndereco(cliente);
 			
 			request.setAttribute("mensagem", "Cliente alterado com sucesso.");

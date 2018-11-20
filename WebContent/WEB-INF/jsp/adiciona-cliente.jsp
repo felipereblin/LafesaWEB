@@ -21,6 +21,7 @@
     	CEP: <input type="text" name="cep" value="${cliente.endereco.cep}"><br>
     	<c:if test="${ cliente.id != 0 }">
     		<input type="hidden" name="id" value="${cliente.id}">
+    		<input type="hidden" name="endereco_id" value="${cliente.endereco.id}">
     	</c:if>
     	<input type="submit" value="Gravar">
     </form>

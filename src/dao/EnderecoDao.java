@@ -164,9 +164,10 @@ public class EnderecoDao implements Dao<Endereco> {
 		try {
 			stmt = conn.prepareStatement(UPDATE);
 			stmt.setString(1, endereco.getRua());
-			stmt.setString(2, endereco.getUf());
-			stmt.setString(3, endereco.getCep());
-			stmt.setInt(4, endereco.getId());
+			stmt.setString(2, endereco.getCidade());
+			stmt.setString(3, endereco.getUf());
+			stmt.setString(4, endereco.getCep());
+			stmt.setInt(5, endereco.getId());
 			stmt.executeUpdate();
 			
 		} catch (SQLException e) {

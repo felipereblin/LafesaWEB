@@ -13,12 +13,12 @@ import model.Endereco;
 
 	public class ClienteDao implements Dao<Cliente> {
 		
-		private static final String GET_BY_ID = "SELECT * FROM cliente WHERE id = ?";
+		private static final String GET_BY_ID = "SELECT * FROM cliente c join endereco e on c.endereco_id = e.id WHERE c.id = ?";
 		private static final String GET_ALL = "SELECT * FROM cliente c join endereco e on c.endereco_id = e.id";
 		private static final String INSERT = "INSERT INTO cliente (nome, cpf, endereco_id) "
 				+ "VALUES (?, ?, ?)";
-		private static final String UPDATE = "UPDATE cliente SET nome = ?, cpf = ?, "
-				+ "endereco_id = ? WHERE id = ?";
+		private static final String UPDATE = "UPDATE cliente SET nome = ?, cpf = ? "
+				+ " WHERE id = ?";
 		private static final String DELETE = "DELETE FROM cliente WHERE id = ?";
 		
 		public ClienteDao() {
@@ -164,8 +164,8 @@ import model.Endereco;
 				stmt = conn.prepareStatement(UPDATE);
 				stmt.setString(1, cliente.getNome());
 				stmt.setLong(2, cliente.getCpf());
-				stmt.setInt(3, cliente.getEndereco().getId());
-				stmt.setInt(4, cliente.getId());
+				//stmt.setInt(3, cliente.getEndereco().getId());
+				stmt.setInt(3, cliente.getId());
 				
 				stmt.executeUpdate();
 				
