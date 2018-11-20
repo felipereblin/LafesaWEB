@@ -1,14 +1,11 @@
 package action;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ClienteDao;
 import model.Cliente;
+import model.Endereco;
+import service.ClienteService;
 
 public class ActionCreateEditCliente implements Action {
 
@@ -16,21 +13,26 @@ public class ActionCreateEditCliente implements Action {
 	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		Cliente cliente = new Cliente();
+		Endereco endereco = new Endereco();
 		cliente.setNome(request.getParameter("nome"));
 		cliente.setCpf(Long.parseLong(request.getParameter("cpf")));
+		endereco.setCep(request.getParameter("cep"));
+		endereco.setCidade(request.getParameter("cidade"));
+		endereco.setRua(request.getParameter("rua"));
+		endereco.setUf(request.getParameter("uf"));
+		cliente.setEndereco(endereco);
 		
-		ClienteDao dao = new ClienteDao();
-		
+		ClienteService clienteService = new ClienteService();
 		
 		if (request.getParameter("id") != "" && request.getParameter("id") != null) {
 			String id = request.getParameter("id");
 			cliente.setId(Integer.parseInt(id));
-			dao.update(cliente);
+			clienteService.updateClienteEndereco(cliente);
 			
 			request.setAttribute("mensagem", "Cliente alterado com sucesso.");
 			
 		} else {
-			dao.insert(cliente);
+			clienteService.saveClienteEndereco(cliente);
 			request.setAttribute("mensagem", "Cliente criado com sucesso");
 		}
 		

@@ -10,8 +10,13 @@ public class ClienteService {
 	EnderecoDao enderecoDao = new EnderecoDao();
 	
 	public void saveClienteEndereco(Cliente cliente) {
-		clienteDao.insert(cliente);
 		enderecoDao.insert(cliente.getEndereco());
+		clienteDao.insert(cliente);
+	}
+	
+	public void updateClienteEndereco(Cliente cliente) {
+		clienteDao.update(cliente);
+		enderecoDao.update(cliente.getEndereco());
 		
 	}
 

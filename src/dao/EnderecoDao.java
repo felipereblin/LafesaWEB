@@ -29,7 +29,7 @@ public class EnderecoDao implements Dao<Endereco> {
 	}
 	
 	private void createTable() throws SQLException {
-	    String sqlCreate = "CREATE TABLE IF NOT EXISTS cliente"
+	    String sqlCreate = "CREATE TABLE IF NOT EXISTS endereco"
 	            + "  (id           	INTEGER,"
 	            + "   rua           VARCHAR(50),"
 	            + "   cidade	    VARCHAR(50),"
@@ -119,8 +119,8 @@ public class EnderecoDao implements Dao<Endereco> {
 		
 		try {
 			stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, endereco.getId());
-			stmt.setString(2, endereco.getRua());
+			stmt.setString(1, endereco.getRua());
+			stmt.setString(2, endereco.getCidade());
 			stmt.setString(3, endereco.getUf());
 			stmt.setString(4, endereco.getCep());
 			

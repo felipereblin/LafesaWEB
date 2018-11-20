@@ -17,14 +17,21 @@
         <th>Id</th>
         <th>Nome</th>
         <th>CPF</th>
-        <th>Endereço</th>
+        <th>Rua</th>
+        <th>Cidade</th>
+        <th>UF</th>
+        <th>CEP</th>
       </tr>
     </thead>
     <c:forEach var="cliente" items="${clientes}" varStatus="id">
   	  <tr bgcolor="#${id.count %2 == 0 ? 'aaee88' : 'ffffff' }">
+  	    <td>${cliente.id}</td>
   	    <td>${cliente.nome}</td>
 		<td>${cliente.cpf}</td>
 	    <td>${cliente.endereco.rua}</td>
+	    <td>${cliente.endereco.cidade}</td>
+	    <td>${cliente.endereco.uf}</td>
+	    <td>${cliente.endereco.cep}</td>
 	    
 	    <td><a href="controller?action=ActionFormEditContato&id=${cliente.id}">Editar</a></td>
 	    <td><a href="controller?action=ActionRemoveContato&id=${cliente.id}">Remover</a></td>
