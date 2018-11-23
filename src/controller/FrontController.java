@@ -15,7 +15,7 @@ public class FrontController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		Action action = ActionFactory.getAction(request, "ActionListaCliente");
+		Action action = ActionFactory.getAction(request, "ActionListaProduto");
 		try {
 			String view = action.execute(request, response);
 			request.getRequestDispatcher(view).forward(request, response);

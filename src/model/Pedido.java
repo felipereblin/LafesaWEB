@@ -6,6 +6,7 @@ public class Pedido {
 
 	private int id;
 	private double valorTotal;
+	private Cliente cliente;
 	private List<Item> itens;
 	
 	public Pedido(int id, double valorTotal) {
@@ -18,6 +19,14 @@ public class Pedido {
 
 	public int getId() {
 		return id;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	public void setId(int id) {

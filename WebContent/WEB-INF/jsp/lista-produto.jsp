@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lista de Clientes</title>
+<title>Lista de Produtos</title>
 </head>
 <body>
   <h2>${mensagem}</h2>
@@ -23,25 +23,19 @@
       <tr>
         <th>Id</th>
         <th>Nome</th>
-        <th>CPF</th>
-        <th>Rua</th>
-        <th>Cidade</th>
-        <th>UF</th>
-        <th>CEP</th>
+        <th>Marca</th>
+        <th>Preço Unitário</th>
       </tr>
     </thead>
-    <c:forEach var="cliente" items="${clientes}" varStatus="id">
+    <c:forEach var="produto" items="${produtos}" varStatus="id">
   	  <tr bgcolor="#${id.count %2 == 0 ? 'aaee88' : 'ffffff' }">
-  	    <td>${cliente.id}</td>
-  	    <td>${cliente.nome}</td>
-		<td>${cliente.cpf}</td>
-	    <td>${cliente.endereco.rua}</td>
-	    <td>${cliente.endereco.cidade}</td>
-	    <td>${cliente.endereco.uf}</td>
-	    <td>${cliente.endereco.cep}</td>
+  	    <td>${produto.id}</td>
+  	    <td>${produto.nome}</td>
+		<td>${produto.marca.nome}</td>
+	    <td>${produto.precoUnitario}</td>
 	    
-	    <td><a href="controller?action=ActionFormEditCliente&id=${cliente.id}">Editar</a></td>
-	    <td><a href="controller?action=ActionRemoveCliente&id=${cliente.id}">Remover</a></td>
+	    <td><a href="controller?action=ActionFormEditProduto&id=${produto.id}">Editar</a></td>
+	    <td><a href="controller?action=ActionRemoveProduto&id=${produto.id}">Remover</a></td>
   	  </tr>
   	</c:forEach>
   </table>

@@ -14,8 +14,8 @@ import model.Produto;
 
 public class ProdutoDao implements Dao<Produto> {
 
-	private static final String GET_BY_ID = "SELECT * FROM produto WHERE id = ?";
-	private static final String GET_ALL = "SELECT * FROM produto";
+	private static final String GET_BY_ID = "SELECT * FROM produto p join Marca m on p.marca_id = m.id WHERE p.id = ?";
+	private static final String GET_ALL = "SELECT * FROM produto p join Marca m on p.marca_id = m.id";
 	private static final String INSERT = "INSERT INTO produto (nome, marca_id, precoUnitario) " + "VALUES (?, ?, ?)";
 	private static final String UPDATE = "UPDATE produto SET nome = ?, marca_id = ?, "
 			+ "precoUnitario = ? WHERE id = ?";
@@ -52,7 +52,8 @@ public class ProdutoDao implements Dao<Produto> {
 
 		produto.setId(rs.getInt("id"));
 		produto.setNome(rs.getString("nome"));
-		produto.setMarca(new Marca(rs.getInt("marca_id"), rs.getString("nome")));
+		produto.setMarca(new Marca(rs.getInt("marca_id")));
+		produto.setPrecoUnitario(Double.parseDouble(rs.getString("precoUnitario")));
 		return produto;
 		
 	}

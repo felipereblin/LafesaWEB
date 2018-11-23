@@ -10,7 +10,14 @@
 </head>
 <body>
   <h2>${mensagem}</h2>
-  <a href="controller?action=ActionFormEditMarca">Novo Marca</a>
+  <a href="controller?action=ActionFormEditProduto">| Novo Produto - </a>
+  <a href="controller?action=ActionListaProduto">Lista Produto |</a>
+  <a href="controller?action=ActionFormEditMarca">| Nova Marca - </a>
+  <a href="controller?action=ActionListaMarca">Lista Marca |</a>
+  <a href="controller?action=ActionFormEditCliente">| Novo Cliente - </a>
+  <a href="controller?action=ActionListaCliente">Lista Marca |</a>
+  <a href="controller?action=ActionFormEditPedido">| Novo Pedido - </a>
+  <a href="controller?action=ActionListaPedido">Lista Pedido |</a>
   <table>
     <thead>
       <tr>

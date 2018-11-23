@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Cliente;
 import model.Endereco;
 import model.Pedido;
 
@@ -16,7 +17,7 @@ import model.Pedido;
 		
 		private static final String GET_BY_ID = "SELECT * FROM pedido WHERE id = ?";
 		private static final String GET_ALL = "SELECT * FROM pedido";
-		private static final String INSERT = "INSERT INTO pedido (valorTotal) VALUES (?)";
+		private static final String INSERT = "INSERT INTO pedido (valorTotal, cliente_id) VALUES (?, ?)";
 		private static final String UPDATE = "UPDATE pedido SET valorTotal = ? WHERE id = ?";
 		private static final String DELETE = "DELETE FROM pedido WHERE id = ?";
 		
@@ -33,6 +34,7 @@ import model.Pedido;
 		    String sqlCreate = "CREATE TABLE IF NOT EXISTS pedido"
 		            + "  (id           INTEGER,"
 		            + "   valorTotal   DOUBLE,"
+		            + "   cliente_id        INTEGER,"
 		            + "   PRIMARY KEY (id))";
 		    
 		    Connection conn = DbConnection.getConnection();
@@ -50,6 +52,7 @@ import model.Pedido;
 				
 			pedido.setId( rs.getInt("id") );
 			pedido.setValorTotal(rs.getDouble("valorTotal"));
+			pedido.setCliente(new Cliente(rs.getInt("cliente_id"), rs.getString("nome")));
 			return pedido;
 	    }
 		
@@ -82,7 +85,7 @@ import model.Pedido;
 		public List<Pedido> getAll() {
 			Connection conn = DbConnection.getConnection();
 			
-			List<Pedido> clientes = new ArrayList<>();
+			List<Pedido> pedidos = new ArrayList<>();
 			Statement stmt = null;
 			ResultSet rs = null;
 			
@@ -92,7 +95,7 @@ import model.Pedido;
 				rs = stmt.executeQuery(GET_ALL);
 				
 				while (rs.next()) {
-					clientes.add(getClienteFromRS(rs));
+					pedidos.add(getClienteFromRS(rs));
 				}			
 				
 			} catch (SQLException e) {
@@ -101,7 +104,7 @@ import model.Pedido;
 				close(conn, stmt, rs);
 			}
 			
-			return clientes;
+			return pedidos;
 		}
 
 		@Override
@@ -113,6 +116,7 @@ import model.Pedido;
 			try {
 				stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
 				stmt.setDouble(1, pedido.getValorTotal());
+				stmt.setInt(2, pedido.getCliente().getId());
 				
 				stmt.executeUpdate();
 				rs = stmt.getGeneratedKeys();

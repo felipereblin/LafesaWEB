@@ -15,6 +15,10 @@ public class Marca {
 	public Marca() {
 		super();
 	}
+	
+	public Marca(int id) {
+		this.id = id;
+	}
 
 	public int getId() {
 		return id;
