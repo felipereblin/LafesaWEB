@@ -3,9 +3,10 @@ package action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.ClienteDao;
-import dao.PedidoDao;
 import model.Pedido;
+import service.ClienteService;
+import service.PedidoService;
+import service.ProdutoService;
 
 
 public class ActionFormEditPedido implements Action {
@@ -16,15 +17,18 @@ public class ActionFormEditPedido implements Action {
 		String strId = request.getParameter("id");
 		
 		Pedido pedido = new Pedido();
-		ClienteDao clienteDao = new ClienteDao();
 		
 		if (strId != null) {
 			int id = Integer.parseInt(strId);
-			PedidoDao dao = new PedidoDao();
-			pedido = dao.getByKey(id);
+			PedidoService pedidoService = new PedidoService();
+			pedido = pedidoService.getPedidoByKey(id);
+			request.setAttribute("selectedCliente", pedido.getCliente().getId());
 		}
 		
-		request.setAttribute("clientes", clienteDao.getAll());
+		ClienteService clienteService = new ClienteService();
+		ProdutoService produtoService = new ProdutoService();
+		request.setAttribute("clientes", clienteService.getAllClientes());
+		request.setAttribute("produtos", produtoService.getAllProducts());
 		request.setAttribute("pedido", pedido);
 		
 		return "/WEB-INF/jsp/adiciona-pedido.jsp";

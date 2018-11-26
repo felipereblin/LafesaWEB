@@ -15,7 +15,7 @@
   <a href="controller?action=ActionFormEditMarca">| Nova Marca - </a>
   <a href="controller?action=ActionListaMarca">Lista Marca |</a>
   <a href="controller?action=ActionFormEditCliente">| Novo Cliente - </a>
-  <a href="controller?action=ActionListaCliente">Lista Marca |</a>
+  <a href="controller?action=ActionListaCliente">Lista Cliente |</a>
   <a href="controller?action=ActionFormEditPedido">| Novo Pedido - </a>
   <a href="controller?action=ActionListaPedido">Lista Pedido |</a>
   <table>

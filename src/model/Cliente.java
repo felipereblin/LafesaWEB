@@ -35,5 +35,9 @@ public class Cliente {
 		this.nome = nome;
 	} 
 	
+	public Cliente(int id) {
+		this.id = id;
+	} 
+	
 	public Cliente() {};
 }

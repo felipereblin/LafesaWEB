@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import dao.ClienteDao;
 import dao.EnderecoDao;
 import model.Cliente;
@@ -17,8 +19,14 @@ public class ClienteService {
 	public void updateClienteEndereco(Cliente cliente) {
 		enderecoDao.update(cliente.getEndereco());
 		clienteDao.update(cliente);
-		
-		
+	}
+	
+	public List<Cliente> getAllClientes(){
+		return clienteDao.getAll();
+	}
+	
+	public Cliente getClienteById(int id){
+		return clienteDao.getByKey(id);
 	}
 
 }

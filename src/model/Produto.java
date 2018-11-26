@@ -38,4 +38,10 @@ public class Produto {
 		this.precoUnitario = precoUnitario;
 	}
 
+	public Produto(int id) {
+		this.id = id;
+	}
+	
+	public Produto() {
+	}
 }

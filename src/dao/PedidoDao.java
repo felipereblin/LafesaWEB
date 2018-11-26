@@ -52,7 +52,7 @@ import model.Pedido;
 				
 			pedido.setId( rs.getInt("id") );
 			pedido.setValorTotal(rs.getDouble("valorTotal"));
-			pedido.setCliente(new Cliente(rs.getInt("cliente_id"), rs.getString("nome")));
+			pedido.setCliente(new Cliente(rs.getInt("cliente_id")));
 			return pedido;
 	    }
 		

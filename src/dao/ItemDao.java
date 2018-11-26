@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Pedido;
+import model.Produto;
 import model.Endereco;
 import model.Item;
 import model.Pedido;
@@ -17,8 +18,9 @@ import model.Pedido;
 
 public class ItemDao implements Dao<Item>{
 	
-	private static final String GET_BY_ID = "SELECT * FROM item NATURAL JOIN pedido WHERE id = ?";
-	private static final String GET_ALL = "SELECT * FROM item NATURAL JOIN pedido";
+	//private static final String GET_BY_ID = "SELECT * FROM item NATURAL JOIN pedido WHERE id = ?";
+	private static final String GET_BY_PEDIDO_ID = "SELECT * FROM item it JOIN pedido p on it.pedido_id = p.id WHERE p.id = ?";
+	private static final String GET_ALL = "SELECT * FROM item it JOIN pedido p on it.pedido_id = p.id";
 	private static final String INSERT = "INSERT INTO item (pedido_id, produto_id, quantidade) "	+ "VALUES (?, ?, ?)";
 	private static final String UPDATE = "UPDATE item SET pedido_id = ?, produto_id = ?, quantidade = ? WHERE id = ?";
 	private static final String DELETE = "DELETE FROM item WHERE id = ?";
@@ -53,37 +55,36 @@ public class ItemDao implements Dao<Item>{
 		Item item = new Item();
 			
 		item.setId( rs.getInt("id") );
-		item.setPedido (new Pedido(rs.getInt("pedido_id"), rs.getDouble("valorTotal")));
+		item.setPedido (new Pedido(rs.getInt("pedido_id")));
 		
-		
+		item.setProduto(new Produto(rs.getInt("produto_id")));
 		item.setQuantidade(rs.getInt("quantidade") );
 	
 		return item;
     }
 	
-	@Override
-	public Item getByKey(int id) {
+	public List<Item> getByPedidoKey(int id) {
 		Connection conn = DbConnection.getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		Item item = null;
+		List<Item> itens = new ArrayList<>();
 		
 		try {
-			stmt = conn.prepareStatement(GET_BY_ID);
+			stmt = conn.prepareStatement(GET_BY_PEDIDO_ID);
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
 			
-			if (rs.next()) {
-				item = getItemFromRS(rs);
-			}
+			while (rs.next()) {
+				itens.add(getItemFromRS(rs));
+			}	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(conn, stmt, rs);
 		}
 		
-		return item;
+		return itens;
 	}
 
 	@Override
@@ -196,6 +197,12 @@ public class ItemDao implements Dao<Item>{
 			throw new RuntimeException("Erro ao fechar recursos.", e);
 		}
 		
+	}
+
+	@Override
+	public Item getByKey(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

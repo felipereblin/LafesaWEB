@@ -14,6 +14,10 @@ public class Pedido {
 		this.valorTotal = valorTotal;
 	}
 
+	public Pedido(int id) {
+		this.id = id;
+	}
+	
 	public Pedido() {
 	}
 

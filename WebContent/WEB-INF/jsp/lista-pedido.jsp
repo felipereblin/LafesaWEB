@@ -10,38 +10,55 @@
 </head>
 <body>
   <h2>${mensagem}</h2>
-  <a href="controller?action=ActionFormEditProduto">| Novo Produto - </a>
-  <a href="controller?action=ActionListaProduto">Lista Produto |</a>
+  <a href="controller?action=ActionFormEditProduto">| Novo Pedido - </a>
+  <a href="controller?action=ActionListaProduto">Lista Pedido |</a>
   <a href="controller?action=ActionFormEditMarca">| Nova Marca - </a>
   <a href="controller?action=ActionListaMarca">Lista Marca |</a>
   <a href="controller?action=ActionFormEditCliente">| Novo Cliente - </a>
-  <a href="controller?action=ActionListaCliente">Lista Marca |</a>
+  <a href="controller?action=ActionListaCliente">Lista Cliente |</a>
   <a href="controller?action=ActionFormEditPedido">| Novo Pedido - </a>
   <a href="controller?action=ActionListaPedido">Lista Pedido |</a>
-  <table>
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Valor Total</th>
-        <th>Nome Cliente</th>
-       	<c:forEach var="item" items="${pedidos.itens}" varStatus="id">
-	    	<th>Nome Produto</th>
-	    </c:forEach>
-        
-      </tr>
-    </thead>
+
     <c:forEach var="pedido" items="${pedidos}" varStatus="id">
-  	  <tr bgcolor="#${id.count %2 == 0 ? 'aaee88' : 'ffffff' }">
-  	    <td>${pedido.id}</td>
-  	    <td>${pedido.valorTotal}</td>
-		<td>${pedido.cliente.nome}</td>
-		<c:forEach var="item" items="${pedidos.itens}" varStatus="id">
-	    	<td>${item.produto.nome}</td>
-	    </c:forEach>
-	  <!--  <td><a href="controller?action=ActionFormEditCliente&id=${pedido.id}">Editar</a></td> -->
-	    <td><a href="controller?action=ActionRemoveCliente&id=${pedido.id}">Remover</a></td>
-  	  </tr>
+    	<div style="border: 1px solid black">
+  			<table>
+    			<thead>
+			      <tr>
+			        <th>Id</th>
+			        <th>Valor Total</th>
+			        <th>Cliente</th>
+			      </tr>
+			    </thead>
+			  	  <tr bgcolor="#${id.count %2 == 0 ? 'aaee88' : 'ffffff' }">
+			  	    <td>${pedido.id}</td>
+			  	    <td>R$${pedido.valorTotal}</td>
+					<td>${pedido.cliente.nome}</td>
+			  	  </tr>
+			  	<table>
+			  		<thead>
+			  			<tr>
+			  				<th>Itens / Produtos</th>	
+			  			</tr>
+			  			<tr>
+			        		<th>Id</th>
+			        		<th>Nome</th>
+			        		<th>Preço Unitário</th>
+			        		<th>Quantidade</th>
+			      		</tr>
+			  		</thead>
+			  		<tbody>
+			  			<c:forEach var="item" items="${pedido.itens}" varStatus="id">
+			  				<tr>
+			  					<td>${item.produto.id}</td>
+			  					<td>${item.produto.nome}</td>
+			  					<td>${item.produto.precoUnitario}</td>
+			  					<td>${item.quantidade}</td>
+			  				</tr>
+			  			</c:forEach>
+			  		</tbody>
+			  	</table>
+			</table>
+		</div>
   	</c:forEach>
-  </table>
 </body>
 </html>

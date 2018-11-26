@@ -4,31 +4,37 @@
 <html>
   <head>
     <meta charset="ISO-8859-1">
-    <title>Edita Pedidos</title>
+    <title>Edita Pedido</title>
     <link href="css/jquery-ui.css" rel="stylesheet">
     <script src="js/jquery.js"></script>
     <script src="js/jquery-ui.js"></script>
+    <script src="js/custom.js"></script>
   </head>
   <body>
-    <h1>Adiciona Pedidos</h1>
+    <h1>Adiciona Pedido</h1>
     <hr/>
-    <form action="controller?action=ActionCreateEditCliente" method="POST">
-    	<%-- Nome: <input type="text" name="nome" value="${cliente.nome}"><br>
-    	CPF: <input type="text" name="cpf" value="${cliente.cpf}"><br>
-    	Rua: <input type="text" name="rua" value="${cliente.endereco.rua}"><br>
-    	Cidade: <input type="text" name="cidade" value="${cliente.endereco.cidade}"><br>
-    	UF: <input type="text" name="uf" value="${cliente.endereco.uf}"><br>
-    	CEP: <input type="text" name="cep" value="${cliente.endereco.cep}"><br> --%>
-    	
-    	<c:forEach var="cliente" items="${clientes}" varStatus="id">
-    	<h4>${cliente.nome}</h4>
-    	</c:forEach>
-    	
-    	<%-- <c:if test="${ cliente.id != 0 }">
-    		<input type="hidden" name="id" value="${cliente.id}">
-    		<input type="hidden" name="endereco_id" value="${cliente.endereco.id}">
-    	</c:if> --%>
-    	<input type="submit" value="Gravar">
+    <form action="controller?action=ActionCreateEditPedido" method="POST">
+    	Cliente: <select id="list_cliente" onchange="changeSelectCliente()">
+    		<option value="" disabled></option>
+    		<c:forEach var="cliente" items="${clientes}" varStatus="id">
+				<option value="${cliente.id}">${cliente.nome}</option></h4>
+			</c:forEach>
+    	</select>
+    	<br /><br />
+    	Produtos:<br />
+    	<c:forEach var="produto" items="${produtos}" varStatus="id">
+    	 	<input type="number" class="productClass" data-product="${produto.id}" style="width: 35px; margin-right: 10px">${produto.id} - ${produto.nome} - ${produto.marca.nome} - ${produto.precoUnitario} <br/>
+    	 </c:forEach>
+    	 <br />
+
+		<input type="hidden" name="cliente_id" id="cliente_id" value="${selectedCliente}">
+		<input type="hidden" name="selectedProducts" id="selectedProducts">
+    	<c:if test="${ pedido.id != 0 }">
+    		<input type="hidden" name="id" value="${pedido.id}">
+    		
+    	</c:if>
+    	<br />
+    	<input type="submit" value="Gravar" onclick="sendProducts()">
     </form>
   </body>
 </html>
