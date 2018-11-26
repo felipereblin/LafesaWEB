@@ -23,7 +23,7 @@
     	<br /><br />
     	Produtos:<br />
     	<c:forEach var="produto" items="${produtos}" varStatus="id">
-    	 	<input type="number" class="productClass" data-product="${produto.id}" style="width: 35px; margin-right: 10px">${produto.id} - ${produto.nome} - ${produto.marca.nome} - ${produto.precoUnitario} <br/>
+    	 	<input type="number" min="1" class="productClass" data-product="${produto.id}" style="width: 35px; margin-right: 10px">${produto.id} - ${produto.nome} - ${produto.marca.nome} - ${produto.precoUnitario} <br/>
     	 </c:forEach>
     	 <br />
 
