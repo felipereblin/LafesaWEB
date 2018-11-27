@@ -53,17 +53,8 @@ public class ActionCreateEditPedido implements Action {
 		
 		PedidoService pedidoService = new PedidoService();
 		
-//		if (request.getParameter("id") != "" && request.getParameter("id") != null) {
-//			String id = request.getParameter("id");
-//			pedido.setId(Integer.parseInt(id));
-//			pedidoService.update(pedido);
-//			
-//			request.setAttribute("mensagem", "Produto alterado com sucesso.");
-//			
-//		} else {
-			pedidoService.savePedidoItem(pedido);
-			request.setAttribute("mensagem", "Produto criado com sucesso");
-//		}
+		pedidoService.savePedidoItem(pedido);
+		request.setAttribute("mensagem", "Produto criado com sucesso");
 		
 		return "controller?action=ActionListaProduto";
 	}
